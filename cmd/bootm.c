@@ -155,7 +155,8 @@ int do_bootm(struct cmd_tbl *cmdtp, int flag, int argc, char *const argv[])
 		if ((*endp != 0) && (*endp != ':') && (*endp != '#'))
 			return do_bootm_subcommand(cmdtp, flag, argc, argv);
 	}
-
+#if 0
+/* HACK: this is commented as FIT image is not properly supported for HAB authentication */
 #ifdef CONFIG_IMX_HAB
 	extern int authenticate_image(
 			uint32_t ddr_start, uint32_t raw_image_size);
@@ -213,6 +214,7 @@ int do_bootm(struct cmd_tbl *cmdtp, int flag, int argc, char *const argv[])
 		printf("Not valid image format for Authentication, Please check\n");
 		return 1;
 	}
+#endif
 #endif
 #endif
 
