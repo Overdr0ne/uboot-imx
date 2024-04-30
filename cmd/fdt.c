@@ -108,6 +108,26 @@ static int fdt_value_env_set(const void *nodep, int len,
 	return 0;
 }
 
+/*
+ * Get an octet string from the fdt and format it in hexa
+ */
+static int fdt_hexa_env_set(const void *nodep, int len, const char *var)
+{
+	if (len > 4096) {
+		printf("error: cannot get octet string with size > 4096)\n");
+		return 1;
+	}
+	/* octet string */
+	char buf[4096*2+1];
+	memset(buf, 0, sizeof(buf));
+	int i;
+	for (i = 0; i < len; i += 1) {
+		sprintf(buf + (i*2), "%02x", *(unsigned char *)(nodep + i));
+	}
+	env_set(var, buf);
+	return 0;
+}
+
 static const char * const fdt_member_table[] = {
 	"magic",
 	"totalsize",
@@ -466,7 +486,12 @@ static int do_fdt(struct cmd_tbl *cmdtp, int flag, int argc, char *const argv[])
 			nodep = fdt_getprop(
 				working_fdt, nodeoffset, prop, &len);
 			if (nodep && len >= 0) {
-				if (subcmd[0] == 'v') {
+				if (subcmd[0] == 'h') { /* hexvalue */
+					int ret;
+					ret = fdt_hexa_env_set(nodep, len, var);
+					if (ret != 0)
+						return ret;
+				} else if (subcmd[0] == 'v') {
 					int index = -1;
 					int ret;
 
@@ -1131,6 +1156,7 @@ U_BOOT_LONGHELP(fdt,
 	"fdt get value <var> <path> <prop> [<index>] - Get <property> and store in <var>\n"
 	"                                      In case of stringlist property, use optional <index>\n"
 	"                                      to select string within the stringlist. Default is 0.\n"
+	"fdt get hexvalue <var> <path> <prop> - Get <property> byte string and store its hex value in <var>\n"
 	"fdt get name <var> <path> <index>   - Get name of node <index> and store in <var>\n"
 	"fdt get addr <var> <path> <prop>    - Get start address of <property> and store in <var>\n"
 	"fdt get size <var> <path> [<prop>]  - Get size of [<property>] or num nodes and store in <var>\n"
