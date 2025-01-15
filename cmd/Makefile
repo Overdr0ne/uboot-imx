@@ -242,10 +242,16 @@ obj-$(CONFIG_CMD_MESON) += meson/
 
 obj-$(CONFIG_ARCH_MVEBU) += mvebu/
 
+# Welma bootflags
+obj-$(CONFIG_CMD_BOOTFLAGS) += bootflags.o
+obj-$(CONFIG_CMD_BOOTFLAGS) += libbootflags.o
+obj-$(CONFIG_CMD_BOOTFLAGS) += libbootflags_crc32.o
+
 # TI
 obj-$(CONFIG_ARCH_KEYSTONE) += ti/
 obj-$(CONFIG_ARCH_K3) += ti/
 obj-$(CONFIG_ARCH_OMAP2PLUS) += ti/
+
 endif # !CONFIG_SPL_BUILD
 
 obj-$(CONFIG_$(SPL_)CMD_TLV_EEPROM) += tlv_eeprom.o

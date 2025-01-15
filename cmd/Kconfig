@@ -2929,6 +2929,54 @@ config CMD_UBIFS
 	help
 	  UBIFS is a file system for flash devices which works on top of UBI.
 
+menuconfig CMD_BOOTFLAGS
+	bool "Welma bootflags"
+  depends on SPL_LEGACY_BLOCK
+	help
+	  Enable a "bootflags" command to read and update bootflags.
+
+	  Mandatory for Welma Update (A/B).
+
+if CMD_BOOTFLAGS
+
+config BOOTFLAGS_INTERFACE
+	string "Bootflags interface"
+	default "mmc"
+	help
+	  Set the interface to use when locating the bootflags.
+
+config BOOTFLAGS_DEVICE
+	int "Bootflags device"
+	default 0
+	help
+	  Set the device to use when locating the bootflags.
+
+	  Example: if BOOTFLAGS_INTERFACE=mmc and BOOTFLAGS_DEVICE=0,
+	  the bootflags will be located on mmc 0.
+
+config BOOTFLAGS_OFFSET
+	hex "Bootflags offset in bytes"
+	default 0x1000
+	help
+	  Set the offset within BOOTFLAGS_DEVICE of the bootflags.
+	  It should be aligned with the block size of the device.
+
+config BOOTFLAGS_OFFSET_COPY
+	hex "Bootflags duplicate offset in bytes"
+	default 0x1000
+	help
+	  Set the offset within BOOTFLAGS_DEVICE of the bootflags duplicate.
+	  It should be aligned with the block size of the device.
+	  It should not be located on the same block as BOOTFLAGS_OFFSET.
+
+config BOOTFLAGS_FIRST_ACTIVE_PARTITION
+	hex "Bootflags first active partition index"
+	default 0x01
+	help
+	  Set the index of the first active partition in bootflags.
+
+endif
+
 config MMC_SPEED_MODE_SET
 	bool "set speed mode using mmc command"
 	depends on CMD_MMC
