@@ -120,6 +120,13 @@ config TFTP_WINDOWSIZE
 	  before an ack response is required.
 	  The default TFTP implementation implies a window size of 1.
 
+config TFTP_PORT
+       bool "Enable TFTP source and destination ports"
+       depends on CMD_TFTPBOOT
+       default y
+       help
+         Enable variables tftpdstp and tftpsrcp.
+
 config TFTP_TSIZE
 	bool "Track TFTP transfers based on file size option"
 	depends on CMD_TFTPBOOT
