@@ -121,6 +121,7 @@ static int init_baud_rate(void)
 
 static int display_text_info(void)
 {
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 #if !defined(CONFIG_SANDBOX) && !defined(CONFIG_EFI_APP)
 	ulong bss_start, bss_end, text_base;
 
@@ -251,6 +252,7 @@ static int show_dram_config(void)
 	}
 	debug("\nDRAM:  ");
 
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	print_size(gd->ram_size, "");
 	if (!sizes_near(gd->ram_size, size)) {
 		printf(" (effective ");
@@ -258,14 +260,17 @@ static int show_dram_config(void)
 	}
 	board_add_ram_info(0);
 	putc('\n');
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 
 	return 0;
 }
 
 __weak int dram_init_banksize(void)
 {
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	gd->bd->bi_dram[0].start = gd->ram_base;
 	gd->bd->bi_dram[0].size = get_effective_memsize();
+	printf("SAMSAM:%i:%d:%d:%d\n", __func__, __LINE__,gd->bd->bi_dram[0].start,gd->bd->bi_dram[0].size);
 
 	return 0;
 }
@@ -436,6 +441,8 @@ static int reserve_video_from_videoblob(void)
  */
 static int setup_relocaddr_from_bloblist(void)
 {
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
+
 	reserve_video_from_videoblob();
 
 	return 0;
@@ -631,6 +638,7 @@ static int reserve_bloblist(void)
 static int display_new_sp(void)
 {
 	debug("New Stack Pointer is: %08lx\n", gd->start_addr_sp);
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 
 	return 0;
 }
@@ -644,11 +652,13 @@ int setup_bdinfo(void)
 {
 	struct bd_info *bd = gd->bd;
 
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	if (IS_ENABLED(CONFIG_SYS_HAS_SRAM)) {
 		bd->bi_sramstart = CONFIG_SYS_SRAM_BASE; /* start of SRAM */
 		bd->bi_sramsize = CONFIG_SYS_SRAM_SIZE;  /* size  of SRAM */
 	}
 
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	return arch_setup_bdinfo();
 }
 
@@ -664,6 +674,7 @@ static int init_post(void)
 
 static int reloc_fdt(void)
 {
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	if (!IS_ENABLED(CONFIG_OF_EMBED)) {
 		if (gd->new_fdt) {
 			memcpy(gd->new_fdt, gd->fdt_blob,
@@ -677,6 +688,7 @@ static int reloc_fdt(void)
 
 static int reloc_bootstage(void)
 {
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 #ifdef CONFIG_BOOTSTAGE
 	if (gd->flags & GD_FLG_SKIP_RELOC)
 		return 0;
@@ -696,6 +708,8 @@ static int reloc_bootstage(void)
 
 static int reloc_bloblist(void)
 {
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
+	printf("asdfSAMSAM:%s:%d\n", __func__, __LINE__);
 #ifdef CONFIG_BLOBLIST
 	/*
 	 * Relocate only if we are supposed to send it
@@ -739,6 +753,7 @@ static int setup_reloc(void)
 #endif
 	}
 
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	memcpy(gd->new_gd, (char *)gd, sizeof(gd_t));
 
 	if (gd->flags & GD_FLG_SKIP_RELOC) {
@@ -765,6 +780,7 @@ static int fix_fdt(void)
 
 static int jump_to_copy(void)
 {
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	if (gd->flags & GD_FLG_SKIP_RELOC)
 		return 0;
 	/*
@@ -792,6 +808,7 @@ static int jump_to_copy(void)
 	relocate_code(gd->start_addr_sp, gd->new_gd, gd->relocaddr);
 #endif
 
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	return 0;
 }
 #endif
@@ -856,6 +873,7 @@ __weak int checkcpu(void)
 
 __weak int clear_bss(void)
 {
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	return 0;
 }
 
@@ -1004,8 +1022,11 @@ void board_init_f(ulong boot_flags)
 	gd->flags = boot_flags;
 	gd->have_console = 0;
 
-	if (initcall_run_list(init_sequence_f))
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
+	if (initcall_run_list(init_sequence_f)) {
+		printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 		hang();
+	}
 
 #if !defined(CONFIG_ARM) && !defined(CONFIG_SANDBOX) && \
 		!defined(CONFIG_EFI_APP) && !CONFIG_IS_ENABLED(X86_64) && \
@@ -1043,6 +1064,7 @@ static const init_fnc_t init_sequence_f_r[] = {
 
 void board_init_f_r(void)
 {
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	if (initcall_run_list(init_sequence_f_r))
 		hang();
 

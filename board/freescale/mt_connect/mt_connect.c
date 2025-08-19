@@ -98,6 +98,7 @@ struct efi_capsule_update_info update_info = {
 int board_early_init_f(void)
 {
 	struct wdog_regs *wdog = (struct wdog_regs *)WDOG1_BASE_ADDR;
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 
 	imx_iomux_v3_setup_multiple_pads(wdog_pads, ARRAY_SIZE(wdog_pads));
 
@@ -111,6 +112,7 @@ int board_early_init_f(void)
 	setup_gpmi_nand(); /* SPL will call the board_early_init_f */
 #endif
 
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	return 0;
 }
 
@@ -160,6 +162,7 @@ int board_phy_config(struct phy_device *phydev)
 
 int board_init(void)
 {
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	if (IS_ENABLED(CONFIG_FEC_MXC))
 		setup_fec();
 
@@ -173,6 +176,7 @@ int board_mmc_get_env_dev(int devno)
 
 int board_late_init(void)
 {
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 #ifdef CONFIG_ENV_IS_IN_MMC
 	board_late_mmc_env_init();
 #endif

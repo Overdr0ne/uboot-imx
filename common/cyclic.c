@@ -118,8 +118,11 @@ int cyclic_unregister_all(void)
 	struct cyclic_info *cyclic;
 	struct hlist_node *tmp;
 
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
+
 	hlist_for_each_entry_safe(cyclic, tmp, cyclic_get_list(), list)
 		cyclic_unregister(cyclic);
 
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	return 0;
 }

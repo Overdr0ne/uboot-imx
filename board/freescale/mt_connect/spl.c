@@ -58,6 +58,7 @@ int spl_board_boot_device(enum boot_device boot_dev_spl)
 
 void spl_dram_init(void)
 {
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	ddr_init(&dram_timing);
 }
 
@@ -100,6 +101,7 @@ static struct fsl_esdhc_cfg usdhc_cfg[1] = {
 int board_mmc_init(struct bd_info *bis)
 {
 	int i, ret;
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	/*
 	 * According to the board_mmc_init() the following map is done:
 	 * (U-Boot device node)    (Physical Port)
@@ -149,6 +151,7 @@ int power_init_board(void)
 	struct pmic *p;
 	int ret;
 
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	ret = power_bd71837_init(I2C_PMIC);
 	if (ret)
 		printf("power init failed");
@@ -183,6 +186,7 @@ int power_init_board(void)
 
 void spl_board_init(void)
 {
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	if (IS_ENABLED(CONFIG_FSL_CAAM)) {
 		if (sec_init())
 			printf("\nsec_init failed!\n");
@@ -204,13 +208,16 @@ void board_init_f(ulong dummy)
 {
 	int ret;
 
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	/* Clear the BSS. */
 	memset(__bss_start, 0, __bss_end - __bss_start);
 
 	arch_cpu_init();
 
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	board_early_init_f();
 
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	timer_init();
 
 	preloader_console_init();
@@ -228,8 +235,10 @@ void board_init_f(ulong dummy)
 
 	power_init_board();
 	
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	/* DDR initialization */
 	spl_dram_init();
 
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	board_init_r(NULL, 0);
 }

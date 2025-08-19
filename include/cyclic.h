@@ -120,6 +120,7 @@ static inline void schedule(void)
 
 static inline int cyclic_unregister_all(void)
 {
+	printf("SAMSAM:%s:%d\n", __func__, __LINE__);
 	return 0;
 }
 #endif
