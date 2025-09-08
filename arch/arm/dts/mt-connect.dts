@@ -467,6 +467,8 @@
 };
 
 &usbotg1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_usb_otg1>;
 	hnp-disable;
 	srp-disable;
 	adp-disable;
@@ -480,6 +482,8 @@
 };
 
 &usbotg2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_usb_otg2>;
 	hnp-disable;
 	srp-disable;
 	adp-disable;
@@ -528,6 +532,16 @@
 };
 
 &iomuxc {
+	pinctrl_usb_otg1: usb-otg1-grp {
+		fsl,pins = <
+		>;
+	};
+
+	pinctrl_usb_otg2: usb-otg2-grp {
+		fsl,pins = <
+		>;
+	};
+
 	pinctrl_fec1: fec1grp {
 		fsl,pins = <
 			MX8MM_IOMUXC_ENET_MDC_ENET1_MDC				0x3
