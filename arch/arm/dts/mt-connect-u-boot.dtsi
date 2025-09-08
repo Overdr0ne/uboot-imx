@@ -104,10 +104,6 @@
 	bootph-pre-ram;
 };
 
-&usbotg1 {
-	status = "enabled";
-};
-
 &mipi_dsi {
 	/delete-property/ assigned-clocks;
 	/delete-property/ assigned-clock-parents;
