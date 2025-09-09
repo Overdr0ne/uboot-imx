@@ -146,7 +146,7 @@ int board_mmc_getcd(struct mmc *mmc)
 #define I2C_PMIC	0
 int power_init_board(void)
 {
-	struct pmic *p;
+	struct udevice *p;
 	int ret;
 
 	ret = power_bd71837_init(I2C_PMIC);
